@@ -32,3 +32,4 @@ console.log(maxSubarraySum([1, 2, 5, 2, 8, 1, 5], 4));
 console.log(maxSubarraySum([4, 2, 1, 6], 1));
 console.log(maxSubarraySum([4, 2, 1, 6, 2], 4));
 console.log(maxSubarraySum([], 4));
+//# sourceMappingURL=slindingWindow.js.map

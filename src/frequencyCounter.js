@@ -57,3 +57,4 @@ console.log(isAnagram(word3, word3));
 const word4 = "iamoak";
 const word5 = "maokai";
 console.log(isAnagram(word4, word5));
+//# sourceMappingURL=frequencyCounter.js.map
