@@ -63,4 +63,39 @@ const insertionSort = (arr) => {
 };
 const insert1 = insertionSort([2, 1, 9, 76, 4]);
 const insert2 = insertionSort([8, 5, 6, 2, 4]);
+function merge(arr1, arr2) {
+    const result = [];
+    let i = 0;
+    let j = 0;
+    while (i < arr1.length && j < arr2.length) {
+        if (arr1[i] < arr2[j]) {
+            result.push(arr1[i]);
+            i += 1;
+        }
+        else {
+            result.push(arr2[j]);
+            j += 1;
+        }
+    }
+    while (i < arr1.length || j < arr2.length) {
+        if (i !== arr1.length) {
+            result.push(arr1[i]);
+            i += 1;
+        }
+        else if (j !== arr2.length) {
+            result.push(arr2[j]);
+            j += 1;
+        }
+    }
+    return result;
+}
+function mergeSort(arr) {
+    if (arr.length === 1) {
+        return arr;
+    }
+    const middle = Math.floor(arr.length / 2);
+    const left = mergeSort(arr.slice(0, middle));
+    const right = mergeSort(arr.slice(middle));
+    return merge(left, right);
+}
 //# sourceMappingURL=%08sort.js.map
