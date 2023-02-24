@@ -99,3 +99,39 @@ function mergeSort(arr: number[]): number[] {
   const right = mergeSort(arr.slice(middle));
   return merge(left, right);
 }
+
+//quick sort
+function arraySwap(arr: number[], i: number, j: number) {
+  const temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+}
+function pivot(arr: number[], start: number, end: number) {
+  const pivotItem = arr[start];
+  let index = start;
+  for (let i = start + 1; i <= end; i += 1) {
+    const item = arr[i];
+    if (pivotItem > item) {
+      index += 1;
+      arraySwap(arr, index, i);
+    }
+  }
+  arraySwap(arr, start, index);
+  return index;
+}
+
+function quickSort(
+  arr: number[],
+  left: number = 0,
+  right: number = arr.length - 1
+) {
+  if (left < right) {
+    const pivotIndex = pivot(arr, left, right);
+    console.log(arr);
+    quickSort(arr, left, pivotIndex - 1);
+    quickSort(arr, pivotIndex + 1, right);
+  }
+}
+
+const test = [100, -3, 2, 4, 6, 9, 1, 2, 5, 3, 23];
+quickSort(test);
