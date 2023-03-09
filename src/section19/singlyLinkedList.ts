@@ -48,20 +48,6 @@ class SinglyLinkedList<T> {
     }
     return undefined;
   }
-<<<<<<< HEAD
-}
-
-const numberList = new SinglyLinkedList<number>();
-console.log(numberList);
-numberList.push(1);
-numberList.push(2);
-numberList.push(3);
-console.log(numberList);
-const t1 = numberList.pop();
-const t2 = numberList.pop();
-const t3 = numberList.pop();
-const t4 = numberList.pop();
-=======
   shift(): T | undefined {
     if (this.head !== null) {
       const nextHead = this.head.next;
@@ -209,5 +195,4 @@ numberList.push(8);
 numberList.push(9);
 numberList.push(10);
 numberList.reverse();
->>>>>>> 4ba034a (section19 단일연결리스트 구현)
 console.log(numberList);
