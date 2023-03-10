@@ -125,6 +125,5 @@ function quickSort(arr, left = 0, right = arr.length - 1) {
         quickSort(arr, pivotIndex + 1, right);
     }
 }
-const test = [100, -3, 2, 4, 6, 9, 1, 2, 5, 3, 23];
-quickSort(test);
+quickSort([100, -3, 2, 4, 6, 9, 1, 2, 5, 3, 23]);
 //# sourceMappingURL=%08sort.js.map
