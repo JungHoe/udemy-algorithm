@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.LinkedList = void 0;
 class DoublyListNode {
     constructor(value) {
         this.value = value;
@@ -25,6 +27,7 @@ class LinkedList {
         this.length -= 1;
     }
 }
+exports.LinkedList = LinkedList;
 class DoublyLinkedList extends LinkedList {
     invalidIndexBounce(index) {
         return (index < 0 || index >= this.length) && index !== 0;
@@ -134,10 +137,34 @@ class DoublyLinkedList extends LinkedList {
             targetNode.next.previous = node;
             targetNode.next = node;
             this.increaseLength();
-            // 1 2 3 4 5
-            // 1 2 3 6 4 5
         }
         return true;
+    }
+    remove(index) {
+        if (this.invalidIndexBounce(index)) {
+            return undefined;
+        }
+        if (index === 0) {
+            return this.shift();
+        }
+        else if (index === this.length - 1) {
+            return this.pop();
+        }
+        else {
+            // 1 2 4 3
+            const node = this.get(index);
+            if (node) {
+                const prev = node.previous;
+                const next = node.next;
+                node.next = null;
+                node.previous = null;
+                prev.next = next;
+                next.previous = prev;
+                this.decreaseLength();
+                return node;
+            }
+        }
+        return undefined;
     }
 }
 const doublyNumberList = new DoublyLinkedList();
@@ -152,9 +179,9 @@ const doublyNumberList = new DoublyLinkedList();
 // doublyNumberList.unshift(3);
 // console.log(doublyNumberList.get(6));
 // doublyNumberList.set(0, 10);
-doublyNumberList.insert(0, 2);
-doublyNumberList.insert(0, 1);
-doublyNumberList.insert(1, 3);
-doublyNumberList.insert(1, 4);
-console.debug(doublyNumberList);
+// doublyNumberList.insert(0, 2);
+// doublyNumberList.insert(0, 1);
+// doublyNumberList.insert(1, 3);
+// doublyNumberList.insert(1, 4);
+// console.log(doublyNumberList.remove(2));
 //# sourceMappingURL=doublyLinkedList.js.map

@@ -7,7 +7,7 @@ class DoublyListNode<T> {
   }
 }
 
-abstract class LinkedList<T> {
+export abstract class LinkedList<T> {
   public length: number;
   public head: DoublyListNode<T> | null;
   public tail: DoublyListNode<T> | null;
@@ -40,12 +40,12 @@ abstract class LinkedList<T> {
    */
   abstract pop(): DoublyListNode<T> | undefined;
   /**
-   * 데이터 맨 앞에 값을 추가합니다.
+   * 데이터 맨 앞에 값을 추출하고 제거합니다.
+   * @param value
    */
   abstract shift(): DoublyListNode<T> | undefined;
   /**
-   * 데이터 맨 앞에 값을 추출하고 제거합니다.
-   * @param value
+   * 데이터 맨 앞에 값을 추가합니다.
    */
   abstract unshift(value: T): void;
   /**
@@ -60,11 +60,15 @@ abstract class LinkedList<T> {
    */
   abstract set(index: number, value: T): boolean;
   /**
-   * 특정 index에 값을 추가합니다.
+   * 특정 index의 값을 추가합니다.
    * @param index
    * @param value
    */
   abstract insert(index: number, value: T): boolean;
+  /**
+   * 특정 index의 값을 삭제합니다
+   */
+  abstract remove(index: number): DoublyListNode<T> | undefined;
 }
 
 class DoublyLinkedList<T> extends LinkedList<T> {
@@ -167,10 +171,32 @@ class DoublyLinkedList<T> extends LinkedList<T> {
       targetNode!.next!.previous = node;
       targetNode.next = node;
       this.increaseLength();
-      // 1 2 3 4 5
-      // 1 2 3 6 4 5
     }
     return true;
+  }
+  remove(index: number) {
+    if (this.invalidIndexBounce(index)) {
+      return undefined;
+    }
+    if (index === 0) {
+      return this.shift();
+    } else if (index === this.length - 1) {
+      return this.pop();
+    } else {
+      // 1 2 4 3
+      const node = this.get(index);
+      if (node) {
+        const prev = node!.previous;
+        const next = node!.next;
+        node.next = null;
+        node.previous = null;
+        prev!.next = next;
+        next!.previous = prev;
+        this.decreaseLength();
+        return node;
+      }
+    }
+    return undefined;
   }
 }
 
@@ -186,8 +212,8 @@ const doublyNumberList = new DoublyLinkedList<number>();
 // doublyNumberList.unshift(3);
 // console.log(doublyNumberList.get(6));
 // doublyNumberList.set(0, 10);
-doublyNumberList.insert(0, 2);
-doublyNumberList.insert(0, 1);
-doublyNumberList.insert(1, 3);
-doublyNumberList.insert(1, 4);
-console.debug(doublyNumberList);
+// doublyNumberList.insert(0, 2);
+// doublyNumberList.insert(0, 1);
+// doublyNumberList.insert(1, 3);
+// doublyNumberList.insert(1, 4);
+// console.log(doublyNumberList.remove(2));
