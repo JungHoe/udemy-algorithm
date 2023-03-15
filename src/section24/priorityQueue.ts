@@ -1,9 +1,11 @@
-class MaxBinaryHeap<T> {
-  public values: T[];
+class QueueNode<T> {
+  constructor(public value: T, public priority: number) {}
+}
+class PriorityQueue<T> {
+  public values: QueueNode<T>[];
   constructor() {
     this.values = [];
   }
-
   private getParentIndex(index: number) {
     if (index === 0) {
       return null;
@@ -15,17 +17,15 @@ class MaxBinaryHeap<T> {
     this.values[a] = this.values[b];
     this.values[b] = temp;
   }
-  insert(value: T) {
-    // debugger;
-    //1.array 맨뒤에 추가한다
-    this.values.push(value);
-    //2.bubbleup한다.
+  enqueue(value: T, priority: number) {
+    const node = new QueueNode(value, priority);
+    this.values.push(node);
     let childIndex = this.values.length - 1;
     let parentIndex = this.getParentIndex(childIndex);
     if (parentIndex !== null) {
-      let child = this.values[childIndex]; // 20
-      let parent = this.values[parentIndex]; //10
-      while (parent < child) {
+      let child = this.values[childIndex];
+      let parent = this.values[parentIndex];
+      while (parent > child) {
         this.swap(childIndex, parentIndex);
         if (parentIndex !== 0) {
           childIndex = parentIndex;
@@ -38,22 +38,23 @@ class MaxBinaryHeap<T> {
   }
   private sinkDown(index: number) {
     // debugger;
-    const node = this.values[index];
+    const node = this.values[index].priority;
     const leftIndex = 2 * index + 1;
     const rightIndex = 2 * index + 2;
-    const leftChild = this.values[leftIndex];
-    const rightChild = this.values[rightIndex];
-    if (node < leftChild && leftChild > rightChild) {
+    const leftChild = this.values[leftIndex] && this.values[leftIndex].priority;
+    const rightChild =
+      this.values[rightIndex] && this.values[rightIndex].priority;
+    if (node > leftChild && leftChild < rightChild) {
       this.swap(index, leftIndex);
       this.sinkDown(leftIndex);
-    } else if (node < rightChild && rightChild > leftChild) {
+    } else if (node > rightChild && rightChild < leftChild) {
       this.swap(index, rightIndex);
       this.sinkDown(rightIndex);
     }
   }
-  extractMax(): T | undefined {
+
+  dequeue(): QueueNode<T> | undefined {
     if (this.values.length > 0) {
-      // 1개남은게 아닐경우
       const root = this.values[0];
       const last = this.values.pop()!;
       if (this.values.length > 0) {
@@ -66,13 +67,10 @@ class MaxBinaryHeap<T> {
   }
 }
 
-// const maxBinaryHeap = new MaxBinaryHeap<number>();
-// maxBinaryHeap.insert(41);
-// maxBinaryHeap.insert(39);
-// maxBinaryHeap.insert(33);
-// maxBinaryHeap.insert(18);
-// maxBinaryHeap.insert(27);
-// maxBinaryHeap.insert(12);
-// maxBinaryHeap.insert(55);
-// maxBinaryHeap.insert(199);
-// console.log(maxBinaryHeap.extractMax());
+const priorityQueue = new PriorityQueue<string>();
+priorityQueue.enqueue("dog", 0);
+priorityQueue.enqueue("pig", 1);
+priorityQueue.enqueue("horse", 2);
+priorityQueue.enqueue("cat", 5);
+console.log(priorityQueue.dequeue());
+console.debug("🤔 ~ file: run.ts:42 ~ priorityQueue:", priorityQueue);
