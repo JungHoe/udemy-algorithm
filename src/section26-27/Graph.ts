@@ -7,7 +7,7 @@ class Graph {
     }
   }
   removeVertex(name: string) {
-    const edges = this.ㅊ[name];
+    const edges = this.adjacencyList[name];
     for (const vertexKey of edges) {
       this.adjacencyList[vertexKey] = this.adjacencyList[vertexKey].filter(
         (item) => item !== vertexKey
